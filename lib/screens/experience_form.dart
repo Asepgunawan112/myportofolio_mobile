@@ -5,10 +5,10 @@ class ExperienceFormPage extends StatefulWidget {
   const ExperienceFormPage({super.key});
 
   @override
-  State<ExperienceFormPage> createState() => _experienceFormPageState();
+  State<ExperienceFormPage> createState() => _ExperienceFormPageState();
 }
 
-class _experienceFormPageState extends State<ExperienceFormPage> {
+class _ExperienceFormPageState extends State<ExperienceFormPage> {
   final _formKey = GlobalKey<FormState>();
 
   String _experienceTitle = "";
@@ -146,7 +146,8 @@ class _experienceFormPageState extends State<ExperienceFormPage> {
                                 'Pengalaman berhasil ditambahkan!',
                               ),
                               content: SingleChildScrollView(
-                                child: ListBody(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('Judul Pengalaman: $_experienceTitle'),
                                     Text('Deskripsi: $_description'),

@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:myportofolio_mobile/screens/experience_form.dart';
 import 'package:myportofolio_mobile/screens/menu.dart';
+import 'package:myportofolio_mobile/screens/project_form.dart';
 
-class ItemCard extends StatelessWidget {
+class ProjectItemCard extends StatelessWidget {
   final ItemHomepage item;
 
-  const ItemCard(this.item, {super.key});
+  const ProjectItemCard(this.item, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      // Menggunakan warna sekunder dari skema tema aplikasi.
       color: item.color,
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
-        // Aksi ketika kartu ditekan oleh pengguna.
         onTap: () {
-          // Menampilkan SnackBar dengan pesan interaktif.
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
@@ -24,12 +21,11 @@ class ItemCard extends StatelessWidget {
                 content: Text("Kamu telah menekan tombol ${item.name}!"),
               ),
             );
-          if (item.name == "Tambah Pengalaman") {
+
+          if (item.name == "Tambah Project") {
             Navigator.push(
               context,
-              MaterialPageRoute(
-                builder: (context) => const ExperienceFormPage(),
-              ),
+              MaterialPageRoute(builder: (context) => const ProjectFormPage()),
             );
           }
         },
@@ -39,7 +35,7 @@ class ItemCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(item.icon, color: Colors.white, size: 30.0),
+                Icon(item.icon, color: Colors.white, size: 30),
                 const Padding(padding: EdgeInsets.all(3)),
                 Text(
                   item.name,

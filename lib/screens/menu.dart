@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myportofolio_mobile/widgets/left_drawer.dart';
-import 'package:myportofolio_mobile/screens/experience_form.dart';
+import 'package:myportofolio_mobile/widgets/experience_card.dart';
 import 'package:myportofolio_mobile/widgets/project_card.dart';
 
 class MyHomePage extends StatelessWidget {
@@ -17,6 +17,8 @@ class MyHomePage extends StatelessWidget {
       const Color(0xFFFB8C00),
     ),
     ItemHomepage("Logout", Icons.logout, Color(0xFFE53935)),
+    ItemHomepage("Lihat Project", Icons.folder, const Color(0xFF07aef5)),
+    ItemHomepage("Tambah Project", Icons.add_circle, const Color(0xFFFB8C00)),
   ];
 
   @override
@@ -76,6 +78,10 @@ class MyHomePage extends StatelessWidget {
                     // shrinkWrap agar ukuran kisi menyesuaikan tinggi konten anak.
                     shrinkWrap: true,
                     children: items.map((ItemHomepage item) {
+                      if (item.name == "Lihat Project" ||
+                          item.name == "Tambah Project") {
+                        return ProjectItemCard(item);
+                      }
                       return ItemCard(item);
                     }).toList(),
                   ),
