@@ -23,7 +23,7 @@ class _ExperienceFormPageState extends State<ExperienceFormPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Form Pengalaman"),
-        backgroundColor: Colors.indigo,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
       ),
       drawer: LeftDrawer(),
