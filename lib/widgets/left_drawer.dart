@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:myportofolio_mobile/screens/login_screen.dart';
 import 'package:myportofolio_mobile/screens/menu.dart';
+import 'package:myportofolio_mobile/screens/certificate_form.dart';
+import 'package:myportofolio_mobile/screens/certificate_list_screen.dart';
 import 'package:myportofolio_mobile/screens/experience_form.dart';
-import 'package:myportofolio_mobile/screens/project_form.dart';
 import 'package:myportofolio_mobile/services/auth_state.dart';
 import 'package:myportofolio_mobile/widgets/auth_guard.dart';
 import 'package:provider/provider.dart';
@@ -50,15 +51,22 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.add_circle_outline),
-            title: const Text('Add Project'),
+            leading: const Icon(Icons.workspace_premium_outlined),
+            title: const Text('Certificates'),
             onTap: () {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const ProjectFormPage(),
+                  builder: (context) => const CertificateListScreen(),
                 ),
               );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_circle_outline),
+            title: const Text('Add Certificate'),
+            onTap: () {
+              _openCertificateForm(context);
             },
           ),
           ListTile(
@@ -102,6 +110,14 @@ class LeftDrawer extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+
+  Future<void> _openCertificateForm(BuildContext context) async {
+    if (!await ensureLoggedIn(context) || !context.mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const CertificateFormPage()),
     );
   }
 }

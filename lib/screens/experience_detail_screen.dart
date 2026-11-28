@@ -13,22 +13,43 @@ class ExperienceDetailScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _DetailItem(label: 'Description', value: experience.description),
-          _DetailItem(label: 'Category', value: experience.category ?? ''),
-          _DetailItem(label: 'Tech stack', value: experience.techStack),
-          _DetailItem(label: 'Project URL', value: experience.projectUrl),
-          _DetailItem(
-            label: 'Experience link',
-            value: experience.experienceLink ?? '',
-          ),
-          if (experience.projectImageUrl.isNotEmpty)
-            _DetailItem(
-              label: 'Project image URL',
-              value: experience.projectImageUrl,
+          if (experience.thumbnail != null && experience.thumbnail!.isNotEmpty)
+            Image.network(
+              experience.thumbnail!,
+              height: 220,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => const SizedBox(
+                height: 120,
+                child: Center(child: Icon(Icons.work_outline, size: 48)),
+              ),
+            )
+          else
+            const SizedBox(
+              height: 120,
+              child: Center(child: Icon(Icons.work_outline, size: 48)),
             ),
+          _DetailItem(label: 'Description', value: experience.description),
+          _DetailItem(label: 'Category', value: experience.category),
+          _DetailItem(
+            label: 'Started',
+            value: _formatDate(experience.startedAt) ?? 'Not specified',
+          ),
+          _DetailItem(
+            label: 'Ended',
+            value: _formatDate(experience.endedAt) ?? 'Present',
+          ),
         ],
       ),
     );
+  }
+
+  String? _formatDate(String? value) {
+    if (value == null || value.isEmpty) return null;
+    final date = DateTime.tryParse(value);
+    if (date == null) return value;
+    return '${date.year.toString().padLeft(4, '0')}-'
+        '${date.month.toString().padLeft(2, '0')}-'
+        '${date.day.toString().padLeft(2, '0')}';
   }
 }
 

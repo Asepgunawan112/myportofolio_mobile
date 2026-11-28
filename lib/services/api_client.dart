@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:myportofolio_mobile/config.dart';
+import 'package:myportofolio_mobile/models/certificate.dart';
 import 'package:myportofolio_mobile/models/experience.dart';
 
 /// Exception thrown when an API request returns a non-2xx status code.
@@ -26,6 +27,39 @@ class ApiClient {
   void close() => _client.close();
 
   Uri _uri(String path) => Uri.parse('$baseUrl$path');
+
+  Future<List<Certificate>> getCertificates() async {
+    final response = await _client.get(
+      _uri('/api/v1/certificate/'),
+      headers: const {'Accept': 'application/json'},
+    );
+    _ensureSuccess(response);
+
+    final decoded = jsonDecode(response.body) as List<dynamic>;
+    return decoded
+        .map((item) => Certificate.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<Certificate> createCertificate(
+    Certificate certificate, {
+    required String token,
+  }) async {
+    final response = await _client.post(
+      _uri('/api/v1/certificate/'),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Token $token',
+      },
+      body: jsonEncode(certificate.toJson()),
+    );
+    _ensureSuccess(response);
+
+    return Certificate.fromJson(
+      jsonDecode(response.body) as Map<String, dynamic>,
+    );
+  }
 
   Future<List<Experience>> getExperience() async {
     final response = await _client.get(

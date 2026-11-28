@@ -90,9 +90,10 @@ class _ExperienceListScreenState extends State<ExperienceListScreen> {
                 final experience = experienceList[index];
                 return Card(
                   child: ListTile(
+                    leading: _ExperienceThumbnail(url: experience.thumbnail),
                     title: Text(experience.title),
                     subtitle: Text(
-                      '${experience.techStack}\n${experience.description}',
+                      '${experience.category}\n${experience.description}',
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -112,6 +113,34 @@ class _ExperienceListScreenState extends State<ExperienceListScreen> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class _ExperienceThumbnail extends StatelessWidget {
+  const _ExperienceThumbnail({required this.url});
+
+  final String? url;
+
+  @override
+  Widget build(BuildContext context) {
+    if (url == null || url!.isEmpty) {
+      return const SizedBox(
+        width: 56,
+        height: 56,
+        child: Icon(Icons.work_outline),
+      );
+    }
+    return Image.network(
+      url!,
+      width: 56,
+      height: 56,
+      fit: BoxFit.cover,
+      errorBuilder: (context, error, stackTrace) => const SizedBox(
+        width: 56,
+        height: 56,
+        child: Icon(Icons.work_outline),
       ),
     );
   }

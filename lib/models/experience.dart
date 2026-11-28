@@ -2,18 +2,16 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'experience.g.dart';
 
-/// Portfolio project synchronized with the Django REST Framework API.
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Experience {
   const Experience({
+    this.id,
     required this.title,
     required this.description,
-    required this.techStack,
-    required this.projectUrl,
-    this.id,
-    this.category,
-    this.experienceLink,
-    this.projectImageUrl = '',
+    this.category = 'full-time',
+    this.thumbnail,
+    this.startedAt,
+    this.endedAt,
   });
 
   factory Experience.fromJson(Map<String, dynamic> json) =>
@@ -22,26 +20,18 @@ class Experience {
   @JsonKey(includeToJson: false)
   final String? id;
 
-  @JsonKey(name: 'title', defaultValue: '')
   final String title;
 
-  @JsonKey(name: 'description', defaultValue: '')
   final String description;
 
-  @JsonKey(name: 'category', defaultValue: 'Part-time')
-  final String? category;
+  @JsonKey(defaultValue: 'full-time')
+  final String category;
 
-  @JsonKey(name: 'experience_link', defaultValue: '')
-  final String? experienceLink;
+  final String? thumbnail;
 
-  @JsonKey(name: 'tech_stack', defaultValue: '')
-  final String techStack;
+  final String? startedAt;
 
-  @JsonKey(name: 'project_url', defaultValue: '')
-  final String projectUrl;
-
-  @JsonKey(name: 'project_image_url', defaultValue: '')
-  final String projectImageUrl;
+  final String? endedAt;
 
   Map<String, dynamic> toJson() => _$ExperienceToJson(this);
 }
